@@ -61,6 +61,7 @@ function colorFunction(color) {
                 e.target.style.backgroundColor = `rgb(${colors[0]},${colors[1]},${colors[2]})`;
             } else {
                 e.target.style.backgroundColor = color;
+                console.log(e.target);
             }
         }
     });
@@ -75,6 +76,7 @@ function colorFunction(color) {
                     e.target.style.backgroundColor = `rgb(${colors[0]},${colors[1]},${colors[2]})`;
                 } else {
                     e.target.style.backgroundColor = color;
+                    console.log(e.target);
                 }
             }
         }
