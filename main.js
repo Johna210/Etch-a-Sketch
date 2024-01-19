@@ -41,6 +41,14 @@ function clearGrid() {
     }
 }
 
+function generateRandom() {
+    const red = Math.floor(Math.random() * 250);
+    const green = Math.floor(Math.random() * 250);
+    const blue = Math.floor(Math.random() * 250);
+
+    return [red, green, blue];
+}
+
 function colorFunction(color) {
     const grid = document.getElementById("grid");
     let isMouseDonwn = false;
@@ -48,7 +56,12 @@ function colorFunction(color) {
         e.stopPropagation();
         if (e.target.className === "cell") {
             isMouseDonwn = true;
-            e.target.style.backgroundColor = color;
+            if (color === "r") {
+                const colors = generateRandom();
+                e.target.style.backgroundColor = `rgb(${colors[0]},${colors[1]},${colors[2]})`;
+            } else {
+                e.target.style.backgroundColor = color;
+            }
         }
     });
 
@@ -57,7 +70,12 @@ function colorFunction(color) {
         if (isMouseDonwn) {
             if (e.target.className === "cell") {
                 isMouseDonwn = true;
-                e.target.style.backgroundColor = color;
+                if (color === "r") {
+                    const colors = generateRandom();
+                    e.target.style.backgroundColor = `rgb(${colors[0]},${colors[1]},${colors[2]})`;
+                } else {
+                    e.target.style.backgroundColor = color;
+                }
             }
         }
     });
@@ -82,6 +100,8 @@ menu.addEventListener("click", (e) => {
             classes = "black";
         } else if (e.target.id === "eraser") {
             classes = "white";
+        } else if (e.target.id === "randomize") {
+            classes = "r";
         } else if (e.target.id === "clear") {
             clearGrid();
         } else if (e.target.id === "change") {
