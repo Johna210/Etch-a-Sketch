@@ -1,6 +1,7 @@
 const main = document.getElementById("main");
 const cell = document.getElementsByClassName("cell");
 const menu = document.getElementById("menus");
+const options = document.getElementsByClassName("menu");
 
 createAGrid(16);
 
@@ -27,11 +28,43 @@ function createAGrid(rows) {
     main.appendChild(grid);
 }
 
+function clearGrid() {
+    const grid = document.getElementById("grid");
+    for (let row = grid.firstChild; row !== null; row = row.nextSibling) {
+        for (
+            let cell = row.firstChild;
+            cell !== null;
+            cell = cell.nextSibling
+        ) {
+            cell.style.backgroundColor = "white";
+        }
+    }
+}
+
 function colorFunction(color) {
     const grid = document.getElementById("grid");
+    let isMouseDonwn = false;
+    grid.addEventListener("mousedown", (e) => {
+        e.stopPropagation();
+        if (e.target.className === "cell") {
+            isMouseDonwn = true;
+            e.target.style.backgroundColor = color;
+        }
+    });
+
     grid.addEventListener("mouseover", (e) => {
         e.stopPropagation();
-        e.target.style.backgroundColor = color;
+        if (isMouseDonwn) {
+            if (e.target.className === "cell") {
+                isMouseDonwn = true;
+                e.target.style.backgroundColor = color;
+            }
+        }
+    });
+
+    grid.addEventListener("mouseup", (e) => {
+        e.stopPropagation();
+        isMouseDonwn = false;
     });
 }
 
@@ -41,18 +74,37 @@ function changeGrid(grid) {
 }
 
 menu.addEventListener("click", (e) => {
-    console.log(e.target.id);
     let classes = "";
-    if (e.target.id === "red") {
-        classes = "red";
-    } else if (e.target.id === "black") {
-        classes = "black";
-    } else if (e.target.id === "eraser") {
-        classes = "white";
-    } else if (e.target.id === "change") {
-        const result = prompt("Enter the number of grids(min 2, max 100): ");
-        changeGrid(parseInt(result));
+    if (e.target.classList.contains("menu")) {
+        if (e.target.id === "red") {
+            classes = "red";
+        } else if (e.target.id === "black") {
+            classes = "black";
+        } else if (e.target.id === "eraser") {
+            classes = "white";
+        } else if (e.target.id === "clear") {
+            clearGrid();
+        } else if (e.target.id === "change") {
+            const result = parseInt(
+                prompt("Enter the number of grids(min 2, max 100): ")
+            );
+
+            if (result < 2) {
+                changeGrid(2);
+            } else if (result > 100) {
+                changeGrid(100);
+            } else {
+                changeGrid(result);
+            }
+        }
+        Array.from(options, (menu) => {
+            if (menu.classList.contains("active")) {
+                menu.classList.remove("active");
+            }
+        });
+
+        e.target.classList.add("active");
+
+        colorFunction(classes);
     }
-    console.log(classes);
-    colorFunction(classes);
 });

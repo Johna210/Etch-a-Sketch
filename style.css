@@ -1,3 +1,11 @@
+header {
+    font-size: 75px;
+    font-weight: 900;
+    text-align: center;
+    margin-top: 50px;
+    font-family: "Rubik Doodle Shadow", system-ui;
+}
+
 #main {
     display: flex;
     justify-content: center;
@@ -10,7 +18,7 @@
     /* width: 5px;
     height: 5px; */
     flex-grow: 1;
-    border: 1px solid black;
+    border: 1px solid gray;
 }
 
 .row {
@@ -23,6 +31,7 @@
     height: 500px;
     display: flex;
     flex-direction: column;
+    border: 2px solid black;
 }
 
 .red-color {
@@ -52,4 +61,8 @@
     align-items: center;
     cursor: pointer;
     padding: 0 3px;
+}
+
+.active {
+    border: 2px solid black;
 }
